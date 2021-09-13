@@ -1,11 +1,32 @@
 import './App.css';
+import React, { Component } from 'react'
 // import ReduxPage from './pages/ReduxPage';
-// import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+// import { 
+//   BrowserRouter as Router,
+//   Route,
+//   Link,
+//   Switch,
+//   useHistory,
+//   useLocation,
+//   useRouteMatch,
+//   useParams,
+//   withRouter,
+//   Prompt,
+//   Redirect
+// } from "react-router-dom";
+
 import { 
   BrowserRouter as Router, 
   Route,
   Link,
-  // Switch
+  Switch,
+  useHistory,
+  useLocation,
+  useRouteMatch,
+  useParams,
+  withRouter,
+  Redirect,
+  // Prompt
 } from "./k-react-router-dom";
 import HomePage from './pages/routerPages/HomePage';
 import UserPage from './pages/routerPages/UserPage';
@@ -39,19 +60,62 @@ function App() {
           1. 优先级 children > component > render 
           2. children 不管路由是否匹配都会被渲染
         */}
-        {/* <Switch> */}
+        <Switch>
           <Route exact path="/"
             // children={() => <div>children page</div>}
             component={HomePage}
-            // render={() => <div>render page</div>}
+            render={() => <div>render page</div>}
             ></Route>
-          <Route path="/user" component={UserPage}></Route>
+          <Route path="/user" component={UserPage} ></Route>
           <Route path="/login" component={LoginPage}></Route>
+          <Route path="/product/:id"
+            component={Product}
+            // render={() => <Product />}
+          ></Route>
           <Route component={_404Page}></Route>
-        {/* </Switch> */}
+        </Switch>
       </Router>
     </div>
   );
 }
 
 export default App;
+
+// 类组件
+@withRouter
+class Product extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {  }
+  }
+  render() {
+    const { match } = this.props;
+    const { url } = match;
+    const { id } = match.params;
+    return (
+      <div>
+        <h1>Product-{id}</h1>
+      </div>
+     );
+  }
+}
+ 
+// 函数组件
+// function Product(props) {
+//   // const { match } = props;
+//   // const { url } = match;
+//   // const { id } = match.params;
+
+//   const history = useHistory();
+//   const location = useLocation();
+//   const match = useRouteMatch();
+//   const params = useParams();
+//   const {id} = match.params;
+
+//   console.log("props", history, location, match, params); //sy-log
+//   return (
+//     <div>
+//       <h1>Product-{id}</h1>
+//     </div>
+//   );
+// }
